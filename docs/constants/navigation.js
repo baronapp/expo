@@ -26,6 +26,7 @@ const GROUPS = {
   'Technical Specs': ['Technical Specs'],
   'Development Builds': ['Development Builds'],
   'EAS Update': ['EAS Update'],
+  'Expo Modules': ['Expo Modules'],
 };
 
 // This array provides the **ordering** for pages within each section
@@ -49,6 +50,8 @@ const sections = [
       'Migrating from Classic Updates to EAS Update',
       'Using EAS Update with a bare React Native project',
       'Runtime versions and updates',
+      'Using environment variables with EAS Update',
+      'Using expo-dev-client with EAS Update',
       'Known issues',
       'FAQ',
     ],
@@ -293,19 +296,19 @@ const sections = [
   {
     name: 'Bare Workflow',
     reference: [
-      'Walkthrough',
+      'Bare Workflow Walkthrough',
       'Up and Running',
-      'Using Libraries',
+      'Using libraries',
       'Existing Apps',
       'Installing Expo modules',
       'Installing react-native-unimodules',
       'Installing expo-updates',
       'Supported Expo SDK APIs',
-      'Using Expo client',
-      'Using Expo for web',
-      'Ejecting from Managed Workflow',
+      'Using Expo Go in Bare Workflow',
+      'Using Expo for web in Bare Workflow',
       'Migrating from ExpoKit',
       'Updating your App',
+      'Error Recovery',
     ],
   },
   {
@@ -426,6 +429,16 @@ const sections = [
       'View Style Props',
     ],
   },
+  {
+    name: 'Expo Modules',
+    reference: [
+      'Overview',
+      'Module API',
+      'Android Lifecycle Listeners',
+      'iOS AppDelegate Subscribers',
+      'Module Config',
+    ],
+  },
 ];
 
 // Order of sections (mapped from directory names in navigation-data.js DIR_MAPPING)
@@ -438,6 +451,7 @@ const ROOT = [
   'Fundamentals',
   'Distributing Your App',
   'Assorted Guides',
+  'Expo Modules',
   'Expo Accounts',
   'Bare Workflow',
   'Push Notifications',

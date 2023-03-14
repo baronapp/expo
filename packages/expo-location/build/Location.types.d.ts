@@ -186,6 +186,10 @@ export declare type LocationTaskServiceOptions = {
      * Color of the foreground service notification. Accepts `#RRGGBB` and `#AARRGGBB` hex formats.
      */
     notificationColor?: string;
+    /**
+     * Boolean value whether to destroy the foreground service if the app is killed.
+     */
+    killServiceOnDestroy?: boolean;
 };
 /**
  * Type representing geofencing region object.
@@ -443,3 +447,4 @@ export interface LocationPermissionResponse extends UMPermissionResponse {
     ios?: PermissionDetailsLocationIOS;
     android?: PermissionDetailsLocationAndroid;
 }
+//# sourceMappingURL=Location.types.d.ts.map

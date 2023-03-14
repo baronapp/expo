@@ -18,6 +18,12 @@ final class LinearGradientLayer: CALayer {
     self.needsDisplayOnBoundsChange = true
     self.masksToBounds = true
   }
+  
+  override init(layer: Any) {
+    super.init(layer: layer)
+    self.needsDisplayOnBoundsChange = true
+    self.masksToBounds = true
+  }
 
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
@@ -77,7 +83,7 @@ final class LinearGradientLayer: CALayer {
     ctx.saveGState()
 
     let colorSpace = CGColorSpaceCreateDeviceRGB()
-    let locations = colors.enumerated().map { (offset: Int, element: CGColor) -> CGFloat in
+    let locations = colors.enumerated().map { (offset: Int, _: CGColor) -> CGFloat in
       if self.locations.count > offset {
         return self.locations[offset]
       } else {

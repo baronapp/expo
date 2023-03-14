@@ -7,7 +7,6 @@ import Nimble
 
 class ArgumentTypeSpec: QuickSpec {
   override func spec() {
-
     it("casts primitives") {
       let type = ArgumentType(Int.self)
       let value = 123
@@ -34,7 +33,7 @@ class ArgumentTypeSpec: QuickSpec {
       let value: Double? = nil
       let anyValue = value as Any
 
-      expect { try type.cast(anyValue) }.to(throwError(errorType: Conversions.NullCastError<Double>.self))
+      expect { try type.cast(anyValue) }.to(throwError(errorType: Conversions.NullCastException<Double>.self))
     }
 
     it("casts arrays") {
@@ -104,7 +103,7 @@ class ArgumentTypeSpec: QuickSpec {
 
         // "841" is not a raw value of any `IntTestEnum` case
         expect { try type.cast("string instead of int") }.to(throwError {
-          expect($0).to(beAKindOf(EnumCastingError.self))
+          expect($0).to(beAKindOf(EnumCastingException.self))
         })
       }
 
@@ -113,7 +112,7 @@ class ArgumentTypeSpec: QuickSpec {
 
         // "841" is not a raw value of any `IntTestEnum` case
         expect { try type.cast(841) }.to(throwError {
-          expect($0).to(beAKindOf(EnumNoSuchValueError.self))
+          expect($0).to(beAKindOf(EnumNoSuchValueException.self))
         })
       }
 

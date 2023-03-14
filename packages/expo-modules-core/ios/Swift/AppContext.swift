@@ -14,6 +14,25 @@ public final class AppContext {
   public private(set) var legacyModuleRegistry: EXModuleRegistry?
 
   /**
+   React bridge of the context's app.
+   */
+  public internal(set) weak var reactBridge: RCTBridge?
+
+  /**
+   JSI runtime of the running app.
+   */
+  public internal(set) var runtime: JavaScriptRuntime? {
+    didSet {
+      // When the runtime is unpinned from the context (e.g. deallocated),
+      // we should make sure to release all JS objects from the memory.
+      // Otherwise the JSCRuntime asserts may fail on deallocation.
+      if runtime == nil {
+        releaseRuntimeObjects()
+      }
+    }
+  }
+
+  /**
    Designated initializer without modules provider.
    */
   public init() {
@@ -85,7 +104,7 @@ public final class AppContext {
     [
       UIApplication.willEnterForegroundNotification,
       UIApplication.didBecomeActiveNotification,
-      UIApplication.didEnterBackgroundNotification,
+      UIApplication.didEnterBackgroundNotification
     ].forEach { name in
       NotificationCenter.default.addObserver(self, selector: #selector(handleClientAppNotification(_:)), name: name, object: nil)
     }
@@ -108,6 +127,19 @@ public final class AppContext {
     }
   }
 
+  // MARK: - Runtime
+
+  /**
+   Unsets runtime objects that we hold for each module.
+   */
+  private func releaseRuntimeObjects() {
+    for module in moduleRegistry {
+      module.javaScriptObject = nil
+    }
+  }
+
+  // MARK: - Deallocation
+
   /**
    Cleans things up before deallocation.
    */
@@ -116,9 +148,11 @@ public final class AppContext {
     moduleRegistry.post(event: .appContextDestroys)
   }
 
-  // MARK: Errors
+  // MARK: - Exceptions
 
-  struct DeallocatedAppContextError: CodedError {
-    var description: String = "The app context has been deallocated."
+  class DeallocatedAppContextException: Exception {
+    override var reason: String {
+      "The app context has been deallocated"
+    }
   }
 }
